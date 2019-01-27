@@ -90,3 +90,4 @@ windowval = Window.partitionBy('userId').orderBy(desc('ts')).rangeBetween(Window
 user_log_valid = user_log_valid.withColumn('phase', Fsum('downgraded').over(windowval))
 
 user_log_valid.select(["userId","firstname", "ts", "page", "level", "phase"]).where(user_log.userId == "1138").sort("ts").collect()
+

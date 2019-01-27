@@ -10,3 +10,5 @@ sc = SparkContext(conf = configure)
 
 # To read dataframes
 from pyspark.sql import SparkSession
+
+SparkContext().stop()

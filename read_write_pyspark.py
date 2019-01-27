@@ -19,7 +19,7 @@ user_log.show(n = 1)
 
 user_log.take(5)
 
-out_path = data_dir+'sparkify_log_file.csv'
+out_path = data_dir+'user_log_file.csv'
 
 user_log.write.save(out_path, format = 'csv', header = True)
 
