@@ -49,3 +49,26 @@ scaler2 = StandardScaler(inputCol = 'NumFeatures', outputCol ='ScaledNumFeatures
 scalerModel = scaler2.fit(df)
 df = scalerModel.transform(df)
 df.head(2)
+
+## Text Preprocessing
+
+cv = CountVectorizer(inputCol='words', outputCol='TF', vocabSize = 1000)
+cvmodel = cv.fit(df)
+df = cvmodel.transform(df)
+df.take(2)
+
+cvmodel.vocabulary
+
+# seeing the least common words
+cvmodel.vocabulary[::-1] # the list invertes
+
+cvmodel.vocabulary[-10:]
+
+idf = IDF(inputCol = 'TF', outputCol = 'TFIDF')
+idfmodel = idf.fit(df)
+df = idfmodel.transform(df)
+df.head()
+
+indexer = StringIndexer(inputCol = 'oneTag', outputCol = 'label')
+df = indexer.fit(df).transform(df)
+df.head()
