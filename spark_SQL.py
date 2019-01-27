@@ -83,6 +83,17 @@ songs_in_hour.show()
 songs_in_hour_pd = songs_in_hour.toPandas()
 print(songs_in_hour_pd)
 
+spark.sql('''
+    SELECT *
+    FROM (SELECT DISTINCT page
+    FROM df_table
+    WHERE userId = "") AS blank_pages
+    RIGHT JOIN (SELECT DISTINCT page
+    FROM df_table) AS all_pages
+    ON blank_pages.page = all_pages.page
+    WHERE blank_pages.page IS NULL
+''').show()
+
 
 
 
