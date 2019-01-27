@@ -1,2 +1,4 @@
 .idea
 temp.py
+derby.log
+metastore_db
