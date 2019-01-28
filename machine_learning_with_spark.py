@@ -97,7 +97,13 @@ minmaxscaler_Model = minmaxscaler.fit(df)
 df = minmaxscaler_Model.transform(df)
 
 
+## Dimensionality Reduction
 
+pca = PCA(k = 100, inputCol = 'TFIDF', outputCol = 'pcaTFIDF')
+model = pca.fit(df)
+df = model.transform(df)
+
+df.head()
 
 
 
