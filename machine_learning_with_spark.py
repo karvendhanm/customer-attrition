@@ -72,3 +72,35 @@ df.head()
 indexer = StringIndexer(inputCol = 'oneTag', outputCol = 'label')
 df = indexer.fit(df).transform(df)
 df.head()
+
+df = df.withColumn('Joined_Body_Title', concat(col('Body'),lit(" "), col('Title')))
+
+regexTokenizer = RegexTokenizer(inputCol='Joined_Body_Title', outputCol='Joined_Body_Title_words', pattern="\\W")
+df = regexTokenizer.transform(df)
+df.head()
+
+body_length = udf(lambda x: len(x), IntegerType())
+df = df.withColumn('Length_Body_Title', body_length('Joined_Body_Title_words'))
+
+assembler1 = VectorAssembler(inputCols = ['Length_Body_Title'], outputCol = "NumFeatures_Body_Title")
+df = assembler1.transform(df)
+
+scaler3 = Normalizer(inputCol = 'NumFeatures_Body_Title', outputCol ='ScaledNumFeatures_Body_Title' )
+df = scaler3.transform(df)
+
+scaler4 = StandardScaler(inputCol = 'NumFeatures_Body_Title', outputCol ='ScaledNumFeatures_Body_Title3', withStd = True, withMean = True)
+scalerModel1 = scaler4.fit(df)
+df = scalerModel1.transform(df)
+
+minmaxscaler = MinMaxScaler(inputCol = 'NumFeatures_Body_Title', outputCol ='ScaledMinMax')
+minmaxscaler_Model = minmaxscaler.fit(df)
+df = minmaxscaler_Model.transform(df)
+
+
+
+
+
+
+
+
+
